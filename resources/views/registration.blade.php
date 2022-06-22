@@ -20,9 +20,9 @@
     <title>Platin Slimming Products Code Registration</title>
 
     <link href="css/style.css" rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body>
+<body style="background: #e4e4e4">
 <div class="logo">
 
 </div>
@@ -30,9 +30,9 @@
     <h1>Platin Slimming Products Code Registration</h1>
 
 
-    <form class="form" id="forms" onsubmit="">
-
-        <p class="field" id="1">
+    <form class="form" id="forms" action="{{route('submitReg')}}" method="POST">
+        @csrf
+        <p class="field" style="margin-top: 20px" id="1">
             <label for="fname"><span>First Name:</span></label>
             <input type="text" name="fname" id="fname" value="" Alt="">
         </p>
@@ -302,7 +302,14 @@
         <p style="color: dimgrey; padding-left: 286px; margin-top: -15px; margin-bottom: 20px;">
             Note: Digits Only, like: 123456
         </p>
-        <p class="submit"><input type="submit" id="submit" name="submit" value="Register" onclick=""></p>
+
+        @if(Session::has('success'))
+        <p class="alert alert-success text-center">{{Session::get('success')}}</p>
+        @elseif(Session::has('danger'))
+            <p class="alert alert-danger text-center">{{Session::get('danger')}}</p>
+        @endif
+
+        <p class="submit"><input type="submit" id="submit" name="submit" value="Register" onclick="showPass()"></p>
 
         <div class="message">
 
@@ -311,8 +318,8 @@
     </form>
 
 
-    <form class="form" id="forms2" style="display: none;" onsubmit="">
-
+    <form action="{{route('submitPass')}}" class="form" id="form2" style="display: block;" method="POST">
+        @csrf
         <p class="field" id="1">
             <label for="license"><span>Password: </span></label>
             <input type="text" name="productpass" id="license" value="" Alt="abcd">
@@ -320,8 +327,12 @@
         <p style="color: dimgrey; padding-left: 286px; margin-top: -15px; margin-bottom: 20px;">
             Note: character Only, like: abcd
         </p>
+        @if(Session::has('successPass'))
+            <p class="alert alert-success text-center">{{Session::get('successPass')}}</p>
+        @elseif(Session::has('dangerPass'))
+            <p class="alert alert-danger text-center">{{Session::get('dangerPass')}}</p>
+        @endif
         <p class="submit"><input type="submit" id="submit" name="submit" value="Finish"></p>
-
         <div class="message2">
 
         </div>
@@ -330,6 +341,11 @@
     </form>
 
 </div> <!--/ Login-->
-<script type="text/javascript" src="js/script.js"></script>
+<script>
+    function showPass() {
+        document.getElementById('#form2').style.display = 'block';
+    }
+</script>
+<script type="text/javascript" src="/js/script.js"></script>
 </body>
 </html>
